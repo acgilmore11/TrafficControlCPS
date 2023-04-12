@@ -2,37 +2,57 @@ package entity;
 
 public class TrafficLight extends Component{
 	private int remaining = 0;
-	private int status = 0;
+	private int status = Global.GREEN;
 	private int id;
+	private SwitchControl lSwitch;
+	private boolean switchIn;
+	private Lane lane;
 	private static int tlID = 0;
 	
-	public TrafficLight() {
+	public TrafficLight(Lane lane, SwitchControl lSwitch, int status) {
 		this.id = tlID++;
+		this.lSwitch = lSwitch;
+		this.status = status;
+		this.lane = lane;
 	}
 	@Override
 	public void react() {
-		if (status < 2) {
-			System.out.println("isDeparting: true" + " (tl: " + id + ")");
+		if (status < Global.RED) {
+			try {
+				lane.dispense();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
-			System.out.println("isDeparting: false" + " (tl: " + id + ")");
+			lane.stop();
 		}
 		
 		//TODO: this is only temporary. this eventually needs to receive input from TLC
-		int switchIn = (int) (Math.random() * 2);
 		
-		if (switchIn == 1) {
-			if (status == 0) {
+		System.out.println("TL" + id + ": Waiting for switch");
+//		int switchIn = (int) (Math.random() * 2);
+		try {
+			switchIn = lSwitch.waitForSwitch();
+			System.out.println("TL" + id + ": Switch set to " + switchIn);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (switchIn) {
+			if (status == Global.GREEN) {
 				status++;
 				remaining = 5;
-			} else if (status == 2) {
-				status = 0;
+			} else if (status == Global.RED) {
+				status = Global.GREEN;
 			}
 		}
 		
-		if (status == 1) {
+		if (status == Global.YELLOW) {
 			remaining--;
 			if (remaining == 0) {
-				status--;
+				status++;
 			}
 		}
 	}

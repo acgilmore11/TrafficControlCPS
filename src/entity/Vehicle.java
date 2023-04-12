@@ -42,9 +42,14 @@ public class Vehicle {
 			
 	}
 	
+	public int getID() {
+		return this.id;
+	}
+	
 	@Override
 	public String toString() {
-		return "Vehicle ID: " + this.id + ", Arrival time: " + this.arrivalTime;
+//		return "Vehicle ID: " + this.id + ", Arrival time: " + this.arrivalTime + ", Wait time: " + getWaitTime();
+		return "VID: " + this.id; 
 	}
 	
 }
