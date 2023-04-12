@@ -12,9 +12,9 @@ public class Simulator {
 	//simulation
 	private TrafficLight tlNS, tlEW;
 	private RoadCamera rcNS, rcEW;
-	private SwitchControl lSwitch;
+	private CoupledIO lSwitch, vNS, vEW;
 	private TLCConstantTime tlcct;
-	
+	private TLCConstantTimeVehicleThreshold tlc_ctvt;
 	public Accumulator acc;
 	
 	
@@ -26,20 +26,26 @@ public class Simulator {
 		acc = new Accumulator();
 		laneNS = new Lane(acc);
 		laneEW = new Lane(acc);
-		lSwitch = new SwitchControl();
+		lSwitch = new CoupledIO();
+		vNS = new CoupledIO();
+		vEW = new CoupledIO();
 		vgNS = new VehicleGenerator(laneNS, acc);
 		vgEW = new VehicleGenerator(laneEW, acc);
-		rcNS = new RoadCamera(laneNS);
-		rcEW = new RoadCamera(laneEW);
+		rcNS = new RoadCamera(laneNS, vNS);
+		rcEW = new RoadCamera(laneEW, vEW);
 		tlNS = new TrafficLight(laneNS, lSwitch, Global.RED);
 		tlEW = new TrafficLight(laneEW, lSwitch, Global.GREEN);
-		tlcct = new TLCConstantTime(lSwitch);
+		tlc_ctvt = new TLCConstantTimeVehicleThreshold(lSwitch,vNS,vEW);
+//		tlcct = new TLCConstantTime(lSwitch);
 		
 //		components.add(vgNS);
 //		components.add(vgEW);
+		components.add(rcNS);
+		components.add(rcEW);
 		components.add(tlNS);
 		components.add(tlEW);
-		components.add(tlcct);
+		components.add(tlc_ctvt);
+//		components.add(tlcct);
 //		components.add(rcNS);
 //		components.add(rcEW);
 		

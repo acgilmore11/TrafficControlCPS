@@ -2,10 +2,10 @@ package entity;
 
 public class TLCConstantTime extends Component {
 	private int tRemaining = Global.T_RED;
-	private SwitchControl lSwitch;
+	private CoupledIO lSwitch;
 
-	public TLCConstantTime(SwitchControl lSwitch) {
-		this.lSwitch = lSwitch;
+	public TLCConstantTime(CoupledIO lSwitch) {
+		this.lSwitch =  lSwitch;
 		
 	}
 	@Override
@@ -13,19 +13,13 @@ public class TLCConstantTime extends Component {
 		// TODO Auto-generated method stub
 		tRemaining--;
 		
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if (tRemaining == 0) {
 			tRemaining = Global.T_RED;
 			System.out.println("Producer: Switch set to true");
-			this.lSwitch.setSwitch(true);
+			this.lSwitch.setOutput(true);
 		} else {
 			System.out.println("Producer: Switch set to false");
-			this.lSwitch.setSwitch(false);
+			this.lSwitch.setOutput(false);
 		}
 	}
 	

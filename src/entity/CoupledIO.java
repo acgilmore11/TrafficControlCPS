@@ -1,30 +1,35 @@
 package entity;
 
-import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Queue;
 
-public class SwitchControl {
+public class CoupledIO {
+	private Object value;
 	private boolean hasDecision = false;
-	private boolean lightSwitch = false;
 	private Queue<Thread> waiting = new LinkedList<Thread>();
 	
-	public synchronized void setSwitch(boolean s) {
+	public synchronized void setOutput(Object o) {
+		this.value = o;
 		this.hasDecision = true;
-		this.lightSwitch = s;
 		notifyAll();
 	}
 	
-	public synchronized boolean waitForSwitch() throws InterruptedException {
+
+	public synchronized Object waitForOutput() {
 		while(!hasDecision) {
 			waiting.add(Thread.currentThread());
-			wait();
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			waiting.remove();
 		}
-		return this.lightSwitch;
+		return this.value;
 	}
 	
 	public void reset() {
 		this.hasDecision = false;
 	}
-
 }
