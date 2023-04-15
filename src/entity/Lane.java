@@ -25,11 +25,12 @@ public class Lane {
 			if (t_remainingDispense == 0) {
 				t_remainingDispense = Global.T_EXIT;
 				if (vehicles.size() > 0) {
-					acc.removeVs(vehicles.remove(0));
+					acc.receiveExitingVs(this.remove(Global.NUM_EXIT));
 				}
 			}
 			
 		}
+		acc.observeLaneTraffic(this.vehicles.size());
 	}
 	
 	public void addVehicles(List<Vehicle> newVs) {
@@ -51,18 +52,18 @@ public class Lane {
 	
 	// not sure yet if this will be used. removes first n vehicles from lane
 	public List<Vehicle> remove(int n) throws Exception {
-		if (n <= vehicles.size()) {
+
 			List<Vehicle> removedVs = new ArrayList<Vehicle>();
 			for (int i = 0; i < n; i++) {
-				Vehicle v = vehicles.remove(0);
-				v.exit();
-				removedVs.add(v);
+				if (vehicles.size() > 0) {
+					Vehicle v = vehicles.remove(0);
+					v.exit();
+					removedVs.add(v);	
+				}
 			}
 			return removedVs;
 			
-		} else {
-			throw new Exception("Exception: " + n + " exceeds size of list");
-		}
+		
 	}
 	
 	

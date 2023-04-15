@@ -6,11 +6,12 @@ import java.util.Queue;
 import java.util.ArrayList;
 
 public class VehicleGenerator extends Component {
-	List<Vehicle> newVehicles;
-	Lane acceptingLane;
-	Accumulator acc;
+	private List<Vehicle> newVehicles;
+	private Lane acceptingLane;
+	private Accumulator acc;
 	private static int vgID = 0;
 	private int id;
+	private int totalGen = 0;
 			
 	public VehicleGenerator() {
 		this.id = vgID++;
@@ -25,7 +26,8 @@ public class VehicleGenerator extends Component {
 		// TODO: this should eventually reference the arrival function based on traffic
 		// statistics
 		// int num = arrivalFunction(Global.round);
-		int num = (int) (Math.random() * 2);
+		
+		int num = getNumVGen();
 		newVehicles = new ArrayList<Vehicle>();
 		for (int i = 0; i < num; i++) {
 			Vehicle newV = new Vehicle();
@@ -41,6 +43,16 @@ public class VehicleGenerator extends Component {
 
 	public List<Vehicle> getVehicles() {
 		return this.newVehicles;
+	}
+
+	private int getNumVGen() {
+		int res = 0;
+		int integral = functions.getVehiclesOverInterval(Global.TOTAL_NUMV_LANE, 0, Global.round);
+		if (integral > this.totalGen) {
+			res = integral - this.totalGen;
+			this.totalGen += res;
+		}
+		return res;
 	}
 
 	@Override

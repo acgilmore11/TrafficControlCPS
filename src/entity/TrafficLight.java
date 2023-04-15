@@ -31,9 +31,9 @@ public class TrafficLight extends Component {
 
 		// TODO: this is only temporary. this eventually needs to receive input from TLC
 
-		System.out.println("TL" + id + ": Waiting for switch");
+//		System.out.println("TL" + id + ": Waiting for switch");
 		switchIn = (boolean) inSwitch.waitForOutput();
-		System.out.println("TL" + id + ": Switch set to " + switchIn);
+//		System.out.println("TL" + id + ": Switch set to " + switchIn);
 
 		if (switchIn) {
 			t_remaining = Global.T_YELLOW;

@@ -13,8 +13,6 @@ public class RoadCamera extends Component{
 	// important: this represents the vehicles the Road Camera has spotted and is aware of
 	private List<Integer> awareV = new ArrayList<Integer>();
 	
-	// not sure about this one yet
-	private List<Integer> leaving;
 
 	public RoadCamera(Lane lane, CoupledIO outv) {
 		this.id = rcID++;
@@ -24,7 +22,7 @@ public class RoadCamera extends Component{
 	@Override
 	public void react() {
 		// TODO Auto-generated method stub
-		System.out.println("RC" + id + " aware of " + awareV.size() + " vehicles");
+//		System.out.println("RC" + id + " aware of " + awareV.size() + " vehicles");
 		this.outV.setOutput(awareV.size());
 		
 		// in terms of SRC, this represents receiving input from Lane

@@ -15,10 +15,10 @@ public class TLCConstantTime extends Component {
 		
 		if (tRemaining == 0) {
 			tRemaining = Global.T_RED;
-			System.out.println("Producer: Switch set to true");
+//			System.out.println("Producer: Switch set to true");
 			this.lSwitch.setOutput(true);
 		} else {
-			System.out.println("Producer: Switch set to false");
+//			System.out.println("Producer: Switch set to false");
 			this.lSwitch.setOutput(false);
 		}
 	}
