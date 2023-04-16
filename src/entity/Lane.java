@@ -30,7 +30,7 @@ public class Lane {
 			}
 			
 		}
-		acc.observeLaneTraffic(this.vehicles.size());
+		acc.observeLaneTraffic((double)this.vehicles.size());
 	}
 	
 	public void addVehicles(List<Vehicle> newVs) {

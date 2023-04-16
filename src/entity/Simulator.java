@@ -98,7 +98,7 @@ public class Simulator {
 
 	
 	public static void main(String[] args) {
-		Simulator sim = new Simulator(3);
+		Simulator sim = new Simulator(2);
 		for (int i = 0; i < 86400; i++) {
 			try {
 				sim.run();

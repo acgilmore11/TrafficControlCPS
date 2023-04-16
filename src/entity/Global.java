@@ -10,7 +10,7 @@ public class Global {
 	public static final int YELLOW = 1;
 	public static final int RED = 2;
 	public static final int T_EXIT = 4;
-	public static final int MAX_VS = 15;
+	public static final int MAX_VS = 20;
 	public static final int NUM_EXIT = 2;
 	public static final int DAILY_SECONDS = 86400;
 	public static final int TOTAL_NUMV_LANE = 12400;

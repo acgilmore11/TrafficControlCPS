@@ -13,9 +13,9 @@ public class Accumulator {
 	private double avgCarsInLane = 0;
 	
 	// only used in average calculation
-	private int totalWait;
-	private int totalObservedCars;
-	private int totalLanesObserved;
+	private double totalWait;
+	private double totalObservedCars;
+	private double totalLanesObserved;
 	
 	
 	public Accumulator() {
@@ -45,7 +45,7 @@ public class Accumulator {
 		}
 	}
 	
-	public void observeLaneTraffic(int num) {
+	public void observeLaneTraffic(double num) {
 		if (num > maxCarsInLane) {
 			maxCarsInLane = num;
 		}

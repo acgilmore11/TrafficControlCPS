@@ -1,7 +1,7 @@
 package entity;
 
 public class TLCVarTimeVehicleThreshold extends TLC{
-	private boolean vSwitch;
+	private int vSwitch = 0;
 	private int numV;
 	private int currTimeInt = Global.T_RED_MIN;
 
@@ -22,7 +22,7 @@ public class TLCVarTimeVehicleThreshold extends TLC{
 		Thread t2 = new Thread(() -> {
 			int vns = (int) inVNS.waitForOutput();
 			int vew = (int) inVEW.waitForOutput();
-			if (vSwitch) {
+			if (vSwitch == 0) {
 				this.numV = vns;
 			} else {
 				this.numV = vew;
@@ -47,7 +47,7 @@ public class TLCVarTimeVehicleThreshold extends TLC{
 				outSwitch.setOutput(false);
 			else {
 				outSwitch.setOutput(true);
-				vSwitch = !vSwitch;
+				vSwitch = (vSwitch + 1) % 2;
 				currTimeInt = Math.min(Global.T_RED_MIN + (this.numV * Global.T_EXIT), Global.T_RED_MAX);
 				tRemaining = currTimeInt;
 				this.outSwitch.setOutput(true);
