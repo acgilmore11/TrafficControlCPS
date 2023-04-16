@@ -13,11 +13,7 @@ public class Simulator {
 	private TrafficLight tlNS, tlEW;
 	private RoadCamera rcNS, rcEW;
 	private CoupledIO lSwitch, vNS, vEW;
-	private TLCConstantTime tlc_ct;
-	private TLCConstantTimeVehicleThreshold tlc_ctvt;
-	private TLCConstantTimeVehicleThresholdModified tlc_ctvtm;
-	private TLCVarTime tlc_vt;
-	private TLCVarTimeVehicleThreshold tlc_vtvt;
+	private TLC tlc;
 	public Accumulator acc;
 	
 	
@@ -25,53 +21,52 @@ public class Simulator {
 	private List<Component> components = new ArrayList<Component>();
 	private List<Thread> threads = new ArrayList<Thread>();
 	
-	public Simulator() {
-		acc = new Accumulator();
-		laneNS = new Lane(acc);
-		laneEW = new Lane(acc);
-		lSwitch = new CoupledIO();
-		vNS = new CoupledIO();
-		vEW = new CoupledIO();
-		vgNS = new VehicleGenerator(laneNS, acc);
-		vgEW = new VehicleGenerator(laneEW, acc);
-		rcNS = new RoadCamera(laneNS, vNS);
-		rcEW = new RoadCamera(laneEW, vEW);
-		tlNS = new TrafficLight(laneNS, lSwitch, Global.RED);
-		tlEW = new TrafficLight(laneEW, lSwitch, Global.GREEN);
-		tlc_ctvt = new TLCConstantTimeVehicleThreshold(lSwitch,vNS,vEW);
-		tlc_ctvtm = new TLCConstantTimeVehicleThresholdModified(lSwitch,vNS,vEW);
-		tlc_vt = new TLCVarTime(lSwitch, vNS, vEW);
-		tlc_vtvt = new TLCVarTimeVehicleThreshold(lSwitch,vNS,vEW);
-		tlc_ct = new TLCConstantTime(lSwitch);
+	public Simulator(int algType) {
+		this.acc = new Accumulator();
+		this.laneNS = new Lane(acc);
+		this.laneEW = new Lane(acc);
+		this.lSwitch = new CoupledIO();
+		this.vNS = new CoupledIO();
+		this.vEW = new CoupledIO();
+		this.vgNS = new VehicleGenerator(laneNS, acc);
+		this.vgEW = new VehicleGenerator(laneEW, acc);
+		this.rcNS = new RoadCamera(laneNS, vNS);
+		this.rcEW = new RoadCamera(laneEW, vEW);
+		this.tlNS = new TrafficLight(laneNS, lSwitch, Global.RED);
+		this.tlEW = new TrafficLight(laneEW, lSwitch, Global.GREEN);
+		try {
+			this.tlc = getTLCFromAlgType(algType);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		
-		
-//		components.add(vgNS);
-//		components.add(vgEW);
 		components.add(rcNS);
 		components.add(rcEW);
 		components.add(tlNS);
 		components.add(tlEW);
+		components.add((Component) tlc);
 		
-		// constant time
-		components.add(tlc_ct);
-		
-		// constant time, vehicle threshold
-//		components.add(tlc_ctvt);
-		
-		// constant time, vehicle threshold mod
-//		components.add(tlc_ctvtm);
-		
-		// var time
-//		components.add(tlc_vt);
-		
-		// var time, vehicle threshold
-//		components.add(tlc_vtvt);
 
-
-//		components.add(rcNS);
-//		components.add(rcEW);
 		
+	}
+	
+	private TLC getTLCFromAlgType(int algType) throws Exception {
+		TLC res = null;
+		if (algType == 0) {
+			res = new TLCConstantTime(lSwitch, vNS, vEW); 
+		} else if (algType == 1) {
+			res = new TLCConstantTimeVehicleThreshold(lSwitch, vNS, vEW); 
+		} else if (algType == 2) {
+			res = new TLCConstantTimeVehicleThresholdModified(lSwitch, vNS, vEW); 
+		} else if (algType == 3) {
+			res = new TLCVarTime(lSwitch, vNS, vEW); 
+		} else if (algType == 4) {
+			res = new TLCVarTimeVehicleThreshold(lSwitch, vNS, vEW); 
+		} else {
+			throw new Exception("Exception: Invalid algorithm type");
+		}
+		return res;
 	}
 	
 	public void run() throws Exception {
@@ -103,7 +98,7 @@ public class Simulator {
 
 	
 	public static void main(String[] args) {
-		Simulator sim = new Simulator();
+		Simulator sim = new Simulator(3);
 		for (int i = 0; i < 86400; i++) {
 			try {
 				sim.run();

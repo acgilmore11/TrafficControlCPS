@@ -10,16 +10,19 @@ public class Accumulator {
 	private double avgWait;
 	private double peakWait = 0;
 	private double maxCarsInLane = 0;
+	private double avgCarsInLane = 0;
 	
 	// only used in average calculation
 	private int totalWait;
+	private int totalObservedCars;
+	private int totalLanesObserved;
 	
 	
 	public Accumulator() {
 		activeVs = new ArrayList<Vehicle>();
 	}
 	
-	public void addVs(List<Vehicle> newVs) {
+	public void receiveEnteringVs(List<Vehicle> newVs) {
 		activeVs.addAll(newVs);
 	}
 	
@@ -46,6 +49,11 @@ public class Accumulator {
 		if (num > maxCarsInLane) {
 			maxCarsInLane = num;
 		}
+		totalObservedCars += num;
+		totalLanesObserved ++;
+		
+		if (Global.round > 0)
+			this.avgCarsInLane = totalObservedCars / totalLanesObserved;
 		
 	}
 	
@@ -57,8 +65,20 @@ public class Accumulator {
 		return this.avgWait;
 	}
 	
+	public double getPeakWait() {
+		return this.peakWait;
+	}
+	
+	public double getAverageCarsInLane() {
+		return this.avgCarsInLane;
+	}
+	
+	public double getPeakCarsInLane() {
+		return this.maxCarsInLane;
+	}
+	
 	public String toString() {
-		return "Avg Wait: " + this.avgWait + ", Peak Wait: "+ this.peakWait +  ", Vehicle throughput: " + throughput + ", Max Cars In Lane: " + this.maxCarsInLane;
+		return "Avg Wait: " + this.avgWait + ", Peak Wait: "+ this.peakWait +  ", Average Cars In Lane: " + this.avgCarsInLane + ", Peak Cars In Lane: " + this.maxCarsInLane;
 	}
 
 }

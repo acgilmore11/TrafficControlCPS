@@ -3,7 +3,7 @@ package entity;
 import java.util.List;
 import java.util.ArrayList;
 
-public class RoadCamera extends Component{
+public class RoadCamera implements Component{
 	private static int rcID = 0;
 	private int id;
 	private List<Integer> inV = null;

@@ -1,6 +1,6 @@
 package entity;
 
-public class TrafficLight extends Component {
+public class TrafficLight implements Component {
 	private int t_remaining = 0;
 	private int status = Global.GREEN;
 	private int id;
@@ -22,18 +22,14 @@ public class TrafficLight extends Component {
 			try {
 				lane.dispense();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
 			lane.stop();
 		}
 
-		// TODO: this is only temporary. this eventually needs to receive input from TLC
-
-//		System.out.println("TL" + id + ": Waiting for switch");
 		switchIn = (boolean) inSwitch.waitForOutput();
-//		System.out.println("TL" + id + ": Switch set to " + switchIn);
+
 
 		if (switchIn) {
 			t_remaining = Global.T_YELLOW;
@@ -50,7 +46,5 @@ public class TrafficLight extends Component {
 		}
 
 	}
-
-//	public void run
 
 }

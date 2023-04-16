@@ -1,16 +1,12 @@
 package entity;
 
-public class TLCConstantTimeVehicleThreshold extends Component {
-	private int tRemaining = Global.T_RED;
-	private CoupledIO outSwitch;
-	private CoupledIO inVNS, inVEW;
-	private int vSwitch = 0;
+public class TLCConstantTimeVehicleThreshold extends TLC {
+	private boolean vSwitch = false;
 	private int numV;
 
 	public TLCConstantTimeVehicleThreshold(CoupledIO outSwitch, CoupledIO inVNS, CoupledIO inVEW) {
-		this.outSwitch =  outSwitch;
-		this.inVNS = inVNS;
-		this.inVEW = inVEW;
+		super(outSwitch, inVNS, inVEW);
+		this.tRemaining = Global.T_RED;
 		
 	}
 	@Override
@@ -24,7 +20,7 @@ public class TLCConstantTimeVehicleThreshold extends Component {
 		Thread t2 = new Thread(() -> {
 			int vns = (int) inVNS.waitForOutput();
 			int vew = (int) inVEW.waitForOutput();
-			if (vSwitch == 0) {
+			if (vSwitch) {
 				this.numV = vns;
 			} else {
 				this.numV = vew;
@@ -46,12 +42,12 @@ public class TLCConstantTimeVehicleThreshold extends Component {
 		// this might need to change to factor in yellow lights
 		if (tRemaining == 0 || numV >= Global.MAX_VS) {
 			outSwitch.setOutput(true);
-			vSwitch = (vSwitch + 1) % 2;
+			vSwitch = !vSwitch;
 			tRemaining = Global.T_RED;
-			System.out.println("TLC: Switch set to true");
+//			System.out.println("TLC: Switch set to true");
 			this.outSwitch.setOutput(true);
 		} else {
-			System.out.println("TLC: Switch set to false");
+//			System.out.println("TLC: Switch set to false");
 			this.outSwitch.setOutput(false);
 		}
 	}

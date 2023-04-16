@@ -1,25 +1,22 @@
 package entity;
 
-public class TLCConstantTime extends Component {
-	private int tRemaining = Global.T_RED;
-	private CoupledIO lSwitch;
+public class TLCConstantTime extends TLC {
 
-	public TLCConstantTime(CoupledIO lSwitch) {
-		this.lSwitch =  lSwitch;
+	public TLCConstantTime(CoupledIO outSwitch, CoupledIO inVNS, CoupledIO inVEW) {
+		super(outSwitch, inVNS, inVEW);
+		this.tRemaining = Global.T_RED;
+		
 		
 	}
 	@Override
 	public void react() {
-		// TODO Auto-generated method stub
 		tRemaining--;
 		
 		if (tRemaining == 0) {
 			tRemaining = Global.T_RED;
-//			System.out.println("Producer: Switch set to true");
-			this.lSwitch.setOutput(true);
+			this.outSwitch.setOutput(true);
 		} else {
-//			System.out.println("Producer: Switch set to false");
-			this.lSwitch.setOutput(false);
+			this.outSwitch.setOutput(false);
 		}
 	}
 	

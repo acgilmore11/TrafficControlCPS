@@ -38,10 +38,6 @@ public class Lane {
 			vehicles.add(v);
 	}
 	
-	public Vehicle remove() {
-		return vehicles.remove(0);
-	}
-	
 	public List<Integer> getVehicleIds() {
 		List<Integer> vIDs = new ArrayList<Integer>();
 		for (Vehicle v : vehicles) {

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.ArrayList;
 
-public class VehicleGenerator extends Component {
+public class VehicleGenerator{
 	private List<Vehicle> newVehicles;
 	private Lane acceptingLane;
 	private Accumulator acc;
@@ -38,7 +38,7 @@ public class VehicleGenerator extends Component {
 		
 		// update lane with newly generated vehicles
 		this.acceptingLane.addVehicles(newVehicles);
-		this.acc.addVs(newVehicles);
+		this.acc.receiveEnteringVs(newVehicles);
 	}
 
 	public List<Vehicle> getVehicles() {
@@ -55,10 +55,5 @@ public class VehicleGenerator extends Component {
 		return res;
 	}
 
-	@Override
-	public void react() {
-		generate();
-		
-	}
 
 }
