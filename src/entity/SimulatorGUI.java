@@ -68,7 +68,7 @@ public class SimulatorGUI {
         // Run the simulation in a separate thread
         new Thread(() -> {
             StringBuilder output = new StringBuilder();
-            for (int i = 0; i < 86400; i++) {
+            for (int i = 0; i < Global.DAILY_SECONDS; i++) {
                 try {
                     sim.run();
                 } catch (Exception e) {
@@ -76,7 +76,7 @@ public class SimulatorGUI {
                     e.printStackTrace();
                 }
                 if (i % 60 == 0) {
-                    output.append("\n\n**********ROUND ").append(Global.round).append("**********\n\n");
+                    output.append("\n\n**********ROUND ").append(Global.round-1).append("**********\n\n");
                     output.append(sim.laneNS.toString()).append("\n");
                     output.append(sim.laneEW.toString()).append("\n");
                     output.append(sim.acc.toString()).append("\n");

@@ -92,43 +92,45 @@ public class Simulator {
 		// must reset at the end of each round
 		// traffic lights await this output from TLC
 		lSwitch.reset();
+		vNS.reset();
+		vEW.reset();
 		Global.round++;
 		
 	}
 
 	
-	public static void main(String[] args) {
-		Simulator sim = new Simulator(2);
-		for (int i = 0; i < 86400; i++) {
-			try {
-				sim.run();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (i % 60 == 0) {
-				System.out.println("\n\n**********ROUND " + Global.round + "**********\n\n");
-				System.out.println(sim.laneNS.toString());
-				System.out.println(sim.laneEW.toString());
-				System.out.println(sim.acc.toString());
-			}
-			
-		}
-		System.out.println(sim.acc.toString());
-		
-//		for (int i = 0; i < 20; i++) {
-//			System.out.println("\n\n**********ROUND " + Global.round + "**********\n\n");
-//			sim.run();
-//			System.out.println(sim.laneNS.toString());
-//			System.out.println(sim.laneEW.toString());
+//	public static void main(String[] args) {
+//		Simulator sim = new Simulator(2);
+//		for (int i = 0; i < 86400; i++) {
+//			try {
+//				sim.run();
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			if (i % 60 == 0) {
+//				System.out.println("\n\n**********ROUND " + Global.round + "**********\n\n");
+//				System.out.println(sim.laneNS.toString());
+//				System.out.println(sim.laneEW.toString());
+//				System.out.println(sim.acc.toString());
+//			}
+//			
 //		}
-		
-		
-		
-
-		
-
-	}
+//		System.out.println(sim.acc.toString());
+//		
+////		for (int i = 0; i < 20; i++) {
+////			System.out.println("\n\n**********ROUND " + Global.round + "**********\n\n");
+////			sim.run();
+////			System.out.println(sim.laneNS.toString());
+////			System.out.println(sim.laneEW.toString());
+////		}
+//		
+//		
+//		
+//
+//		
+//
+//	}
 
 }
 
