@@ -7,6 +7,7 @@ public class ComponentThread extends Thread{
 		this.component = c;
 	}
 	
+	@Override
 	public void run() {
 		component.react();
 	}

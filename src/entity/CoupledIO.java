@@ -8,6 +8,7 @@ public class CoupledIO {
 	private boolean hasDecision = false;
 	private Queue<Thread> waiting = new LinkedList<Thread>();
 	
+	// sets output and notifies waiting threads
 	public synchronized void setOutput(Object o) {
 		this.value = o;
 		this.hasDecision = true;
@@ -15,6 +16,7 @@ public class CoupledIO {
 	}
 	
 
+	// thread will suspend execution until output is set
 	public synchronized Object waitForOutput() {
 		while(!hasDecision) {
 			waiting.add(Thread.currentThread());

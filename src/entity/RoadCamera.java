@@ -21,7 +21,6 @@ public class RoadCamera implements Component{
 	}
 	@Override
 	public void react() {
-		// TODO Auto-generated method stub
 //		System.out.println("RC" + id + " aware of " + awareV.size() + " vehicles");
 		this.outV.setOutput(awareV.size());
 		
